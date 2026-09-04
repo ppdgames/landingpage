@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Name — A Vintage Story Mod</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --parchment:   #EDE8DC;
+      --parchment-2: #E0D9CA;
+      --parchment-3: #C9BFA8;
+      --ink:         #1A1712;
+      --ink-dim:     #5A5040;
+      --ochre:       #5C4A2A;
+      --moss:        #5C7A50;
+      --moss-dim:    #3D5235;
+      --clay:        #8B6B3D;
+      --clay-light:  #A07840;
+
+      --ff-mono:  'IBM Plex Mono', monospace;
+      --ff-serif: 'Source Serif 4', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--parchment);
+      color: var(--ink);
+      font-family: var(--ff-serif);
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    /* ── Layout ───────────────────────────────────────── */
+    .wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ── Section headers ──────────────────────────────── */
+    .sec-label {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+      letter-spacing: .08em;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-family: var(--ff-mono);
+      font-weight: 600;
+      font-size: clamp(1.3rem, 3vw, 1.75rem);
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+
+    p { max-width: 65ch; margin-bottom: 1em; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── Divider ──────────────────────────────────────── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin: 72px 0 52px;
+    }
+
+    .divider-num {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      color: var(--parchment-3);
+      flex-shrink: 0;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--parchment-3);
+    }
+
+    /* ════════════════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════════════════ */
+    #hero {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 0 72px;
+    }
+
+    .hero-inner { position: relative; }
+
+    .hero-ver {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      font-family: var(--ff-mono);
+      font-weight: 600;
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      color: var(--ink);
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      margin-bottom: 28px;
+    }
+
+    .hero-desc {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--ink-dim);
+      max-width: 55ch;
+      margin-bottom: 48px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-key {
+      font-family: var(--ff-mono);
+      font-size: 10px;
+      color: var(--parchment-3);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .meta-val {
+      font-family: var(--ff-mono);
+      font-size: 13px;
+      color: var(--ochre);
+    }
+
+    /* ════════════════════════════════════════════════════
+       ABOUT
+    ════════════════════════════════════════════════════ */
+    #about { padding: 0; }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1px;
+      margin-top: 36px;
+      background: var(--parchment-3);
+      border: 1px solid var(--parchment-3);
+    }
+
+    .team-member {
+      background: var(--parchment);
+      padding: 24px;
+    }
+
+    .member-name {
+      font-family: var(--ff-mono);
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 3px;
+    }
+
+    .member-role {
+      font-family: var(--ff-mono);
+      font-size: .75rem;
+      color: var(--clay);
+      margin-bottom: 14px;
+    }
+
+    .member-bio {
+      font-size: .9rem;
+      line-height: 1.55;
+      color: var(--ink-dim);
+      margin: 0;
+    }
+
+    /* ════════════════════════════════════════════════════
+       PROJECT
+    ════════════════════════════════════════════════════ */
+    #project { padding: 0; }
+
+    .feature-list {
+      list-style: none;
+      margin: 28px 0;
+      border-top: 1px solid var(--parchment-3);
+    }
+
+    .feature-list li {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--parchment-3);
+      font-size: 1rem;
+      color: var(--ink-dim);
+      display: flex;
+      gap: 16px;
+      align-items: baseline;
+    }
+
+    .feature-list li::before {
+      content: attr(data-n);
+      font-family: var(--ff-mono);
+      font-size: .72rem;
+      color: var(--parchment-3);
+      flex-shrink: 0;
+    }
+
+    .vs-block {
+      margin-top: 36px;
+      background: var(--parchment-2);
+      padding: 32px;
+      border-left: 3px solid var(--ochre);
+    }
+
+    .vs-block-label {
+      font-family: var(--ff-mono);
+      font-size: 10px;
+      color: var(--ochre);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .vs-block p {
+      font-size: .95rem;
+      color: var(--ink-dim);
+    }
+
+    /* ════════════════════════════════════════════════════
+       DISCORD
+    ════════════════════════════════════════════════════ */
+    #community { padding: 0; }
+
+    .discord-wrap {
+      margin-top: 32px;
+      background: var(--ink);
+      padding: 40px;
+      display: flex;
+      align-items: flex-start;
+      gap: 32px;
+    }
+
+    .discord-logo {
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .discord-logo svg {
+      width: 36px;
+      height: 36px;
+      opacity: .6;
+    }
+
+    .discord-body h3 {
+      font-family: var(--ff-mono);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--parchment);
+      margin-bottom: 10px;
+    }
+
+    .discord-body p {
+      font-size: .95rem;
+      color: var(--parchment-3);
+      margin-bottom: 24px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 24px;
+      font-family: var(--ff-mono);
+      font-size: .78rem;
+      letter-spacing: .06em;
+      text-decoration: none;
+      text-transform: lowercase;
+      background: var(--clay);
+      color: var(--parchment);
+      transition: background .15s;
+    }
+
+    .btn:hover { background: var(--clay-light); }
+
+    /* ════════════════════════════════════════════════════
+       ROADMAP
+    ════════════════════════════════════════════════════ */
+    #roadmap { padding: 0 0 96px; }
+
+    .roadmap-table {
+      margin-top: 36px;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .phase-row {
+      border-top: 1px solid var(--parchment-3);
+    }
+
+    .phase-row:last-child { border-bottom: 1px solid var(--parchment-3); }
+
+    .phase-row td {
+      padding: 22px 0;
+      vertical-align: top;
+    }
+
+    .phase-row td:first-child {
+      width: 160px;
+      padding-right: 28px;
+      font-family: var(--ff-mono);
+      font-size: .75rem;
+      color: var(--parchment-3);
+      padding-top: 25px;
+    }
+
+    .phase-name {
+      font-family: var(--ff-mono);
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .phase-tag {
+      font-size: .68rem;
+      padding: 2px 8px;
+      font-weight: 400;
+      border: 1px solid;
+    }
+
+    .tag-done    { color: var(--moss);     border-color: var(--moss-dim); }
+    .tag-active  { color: var(--clay);     border-color: var(--clay);
+                   background: rgba(139,107,61,.08); }
+    .tag-planned { color: var(--parchment-3); border-color: var(--parchment-3); }
+
+    .phase-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .phase-items li {
+      font-size: .9rem;
+      color: var(--ink-dim);
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .phase-items li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--parchment-3);
+    }
+
+    .phase-row.done .phase-items li {
+      color: var(--parchment-3);
+      text-decoration: line-through;
+      text-decoration-color: var(--parchment-3);
+    }
+
+    .phase-row.active .phase-items li { color: var(--ink); }
+
+    /* ── Footer ───────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--parchment-3);
+      padding: 28px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-family: var(--ff-mono);
+      font-size: .72rem;
+      color: var(--parchment-3);
+    }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 600px) {
+      .wrap { padding: 0 20px; }
+      .discord-wrap { flex-direction: column; gap: 20px; padding: 28px; }
+      .hero-meta { gap: 20px; }
+
+      .roadmap-table, .roadmap-table tbody,
+      .roadmap-table tr, .roadmap-table td {
+        display: block;
+        width: 100%;
+      }
+      .phase-row td:first-child {
+        width: auto;
+        padding: 22px 0 4px;
+        border-top: 1px solid var(--parchment-3);
+      }
+      .phase-row { border-top: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HERO ══════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="wrap hero-inner">
+    <p class="hero-ver">mod_name/v0.1-dev &nbsp;·&nbsp; vintage-story</p>
+    <h1>Project<br>Name</h1>
+    <p class="hero-desc">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      A comprehensive overhaul for Vintage Story that rewires how the world works.
+    </p>
+
+  </div>
+</section>
+
+<div class="wrap">
+
+  <!-- ══ ABOUT ══════════════════════════════════════════ -->
+  <div class="divider">
+    <span class="divider-num">01</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <section id="about">
+    <p class="sec-label">// who we are</p>
+    <h2>The Team</h2>
+
+    <p>
+      Quisque in est sit amet enim blandit ullamcorper. We are a small group of modders
+      and systems designers who share one obsession — building the survival game
+      we always wanted to play.
+    </p>
+
+    <div class="team-grid">
+      <div class="team-member">
+        <div class="member-name">Username One</div>
+        <div class="member-role">Lead Developer</div>
+        <p class="member-bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+      </div>
+      <div class="team-member">
+        <div class="member-name">Username Two</div>
+        <div class="member-role">Systems Designer</div>
+        <p class="member-bio">Ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation.</p>
+      </div>
+      <div class="team-member">
+        <div class="member-name">Username Three</div>
+        <div class="member-role">Content & Lore</div>
+        <p class="member-bio">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PROJECT ════════════════════════════════════════ -->
+  <div class="divider">
+    <span class="divider-num">02</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <section id="project">
+    <p class="sec-label">// the mod</p>
+    <h2>What We're Building</h2>
+
+    <p>
+      Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
+      sed quia consequuntur magni dolores eos qui ratione sequi nesciunt. This is not
+      a content pack. It is a rethink of how the world's systems connect to each other.
+    </p>
+
+    <ul class="feature-list">
+      <li data-n="—">Lorem ipsum dolor sit amet — core gameplay systems rebuilt</li>
+      <li data-n="—">Consectetur adipiscing elit — a living world that reacts to your presence</li>
+      <li data-n="—">Sed do eiusmod tempor — deeply interlocked crafting and resource chains</li>
+      <li data-n="—">Ut labore et dolore magna — faction relations and reputation</li>
+      <li data-n="—">Quis nostrud exercitation — biome-driven events and seasonal cycles</li>
+    </ul>
+
+    <div class="vs-block">
+      <div class="vs-block-label">on vintage story</div>
+      <p>
+        Vintage Story is an uncompromising wilderness survival game rooted in geology,
+        archaeology, and ancient craftsmanship. Its engine is built for modding at depth —
+        not reskins, but rewrites of how the world thinks. We chose it because it provides
+        the bones of a real simulation and none of the hand-holding that would get in the way.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ COMMUNITY ════════════════════════════════════ -->
+  <div class="divider">
+    <span class="divider-num">03</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <section id="community">
+    <p class="sec-label">// join us</p>
+    <h2>The Community</h2>
+
+    <p>
+      Development happens in the open. Every design decision, playtest, and changelog
+      goes through the community first. If you want to follow along, break things,
+      or argue about design — this is where it happens.
+    </p>
+
+    <div class="discord-wrap">
+      <div class="discord-logo">
+        <svg viewBox="0 0 127.14 96.36" xmlns="http://www.w3.org/2000/svg">
+          <path fill="currentColor" d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5.04 12.69-11.43 12.69Z"/>
+        </svg>
+      </div>
+      <div class="discord-body">
+        <h3>Join the Discord</h3>
+        <p>
+          Lorem ipsum dolor sit amet — share feedback, report bugs, vote on features,
+          and watch the mod come to life one commit at a time.
+        </p>
+        <a href="#" class="btn">→ enter server</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ROADMAP ════════════════════════════════════════ -->
+  <div class="divider">
+    <span class="divider-num">04</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <section id="roadmap">
+    <p class="sec-label">// development</p>
+    <h2>Roadmap</h2>
+
+    <p>
+      What has shipped, what is running now, and what we are building toward.
+      Updated when each phase closes.
+    </p>
+
+    <table class="roadmap-table">
+      <tbody>
+
+        <tr class="phase-row done">
+          <td>Early 2024</td>
+          <td>
+            <div class="phase-name">
+              Phase I — Foundation
+              <span class="phase-tag tag-done">done</span>
+            </div>
+            <ul class="phase-items">
+              <li>Core mod architecture and build pipeline</li>
+              <li>Lorem ipsum — initial world systems prototype</li>
+              <li>Dolor sit amet — basic crafting overhaul</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr class="phase-row done">
+          <td>Mid 2024</td>
+          <td>
+            <div class="phase-name">
+              Phase II — World Systems
+              <span class="phase-tag tag-done">done</span>
+            </div>
+            <ul class="phase-items">
+              <li>Consectetur adipiscing — biome event framework</li>
+              <li>Sed do eiusmod — resource chain implementation</li>
+              <li>Ut labore et dolore — first internal playtest</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr class="phase-row active">
+          <td>Late 2024<br>– present</td>
+          <td>
+            <div class="phase-name">
+              Phase III — Societies
+              <span class="phase-tag tag-active">in progress</span>
+            </div>
+            <ul class="phase-items">
+              <li>Faction relations and reputation system</li>
+              <li>Lorem ipsum — settlement generation rework</li>
+              <li>Nemo enim ipsam — NPC behaviour overhaul</li>
+              <li>Community alpha testing round</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr class="phase-row planned">
+          <td>2025</td>
+          <td>
+            <div class="phase-name">
+              Phase IV — Lore & Depth
+              <span class="phase-tag tag-planned">planned</span>
+            </div>
+            <ul class="phase-items">
+              <li>Written lore layer and in-world documents</li>
+              <li>Quis nostrud — seasonal narrative events</li>
+              <li>Duis aute irure — environmental storytelling pass</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr class="phase-row planned">
+          <td>2025 — TBD</td>
+          <td>
+            <div class="phase-name">
+              Phase V — First Release
+              <span class="phase-tag tag-planned">planned</span>
+            </div>
+            <ul class="phase-items">
+              <li>Public beta on Vintage Story mod portal</li>
+              <li>Sunt in culpa — full documentation</li>
+              <li>Excepteur sint — community server launch</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </section>
+
+</div><!-- /wrap -->
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <span>project-name &nbsp;·&nbsp; a mod for vintage story</span>
+      <span>not affiliated with Anego Studios</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
