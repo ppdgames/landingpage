@@ -22,7 +22,7 @@ body {
   background: var(--parchment);
   color: var(--ink);
   font-family: var(--ff-serif);
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.75;
 }
 
