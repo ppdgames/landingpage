@@ -84,14 +84,25 @@ p:last-child { margin-bottom: 0; }
   flex-direction: column;
   justify-content: flex-end;
   padding: 0 0 72px;
+  position: relative;
+  background-image: url('background.png');
+  background-size: cover;
+  background-position: top center;
 }
 
-.hero-inner { position: relative; }
+@media (max-width: 600px) {
+  #hero {
+    background-position: 57% 0%;
+  }
+}
+
+.hero-inner { position: relative; z-index: 1; }
+.hero-inner p { color: rgba(255,255,255,.8); }
 
 .hero-ver {
   font-family: var(--ff-mono);
   font-size: 11px;
-  color: var(--ink-dim);
+  color: rgba(255,255,255,.55);
   margin-bottom: 32px;
 }
 
@@ -99,7 +110,7 @@ h1 {
   font-family: var(--ff-mono);
   font-weight: 600;
   font-size: clamp(2.4rem, 7vw, 5rem);
-  color: var(--ink);
+  color: #fff;
   line-height: 1.05;
   letter-spacing: -.02em;
   margin-bottom: 28px;
@@ -107,10 +118,26 @@ h1 {
 
 .hero-desc {
   font-size: clamp(1rem, 2vw, 1.2rem);
-  color: var(--ink-dim);
+  color: rgba(255,255,255,.8);
   max-width: 55ch;
-  margin-bottom: 48px;
+  margin-bottom: 1em;
 }
+
+.btn--hero {
+  display: inline-block;
+  margin-top: 32px;
+  padding: 10px 24px;
+  font-family: var(--ff-mono);
+  font-size: .78rem;
+  letter-spacing: .06em;
+  text-decoration: none;
+  text-transform: lowercase;
+  background: var(--clay);
+  color: var(--parchment);
+  transition: background .15s;
+}
+
+.btn--hero:hover { background: var(--clay-light); }
 
 .hero-meta {
   display: flex;
@@ -178,6 +205,18 @@ h1 {
   color: var(--ink-dim);
   margin: 0;
 }
+
+.team-member--invite {
+  background: var(--parchment-2);
+  border: 1px dashed var(--parchment-3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.team-member--invite .member-name { color: var(--ink-dim); }
+.team-member--invite .member-role { color: var(--parchment-3); }
+.team-member--invite .member-bio  { font-style: italic; }
 
 /* ════════════════════════════════════════════════════
    PROJECT
