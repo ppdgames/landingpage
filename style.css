@@ -176,7 +176,7 @@ h1 {
 /* ════════════════════════════════════════════════════
    ABOUT
 ════════════════════════════════════════════════════ */
-#about { padding: 0; }
+#about { padding: 0 0 96px; }
 
 .team-grid {
   display: grid;
@@ -333,7 +333,7 @@ h1 {
 /* ════════════════════════════════════════════════════
    ROADMAP
 ════════════════════════════════════════════════════ */
-#roadmap { padding: 0 0 96px; }
+#roadmap { padding: 0; }
 
 .roadmap-table {
   margin-top: 36px;
@@ -452,3 +452,5 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+.vs-block p { max-width: 100%; }
